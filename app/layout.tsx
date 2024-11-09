@@ -1,6 +1,7 @@
 
 import type { Metadata, Viewport } from "next";
 import { Nunito } from "next/font/google";
+import {ClerkProvider} from '@clerk/nextjs'
 
 import "./globals.css";
 
@@ -21,10 +22,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <ClerkProvider appearance={{
+      layout: {
+        logoImageUrl: "/favicon.ico",
+      },
+      variables: {
+        colorPrimary: "#22C55E",
+      },
+    }}>
+      <html lang="en">
        <body className={font.className}>
         {children}
       </body>
     </html>
+    </ClerkProvider>
   );
 }
