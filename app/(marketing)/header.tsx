@@ -6,9 +6,9 @@ import {Loader} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { links } from '@/config'
 
-const Header = () => {
+const Header = async() => {
 
-  const {userId}=auth();
+  const {userId}=await auth();
   return (
     <header className='h-20 w-full border-b-2 border-slate-200 px-4'>
       <div className='mx-auto flex h-full items-center justify-between lg:max-w-screen-lg'>
