@@ -1,7 +1,10 @@
 import { cn } from '@/lib/utils'
+import { ClerkLoaded, ClerkLoading, UserButton } from '@clerk/nextjs'
+import { Loader } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import SidebarItem from './sidebar-item'
 
 type SidebarProps={
   className?:string
@@ -24,6 +27,31 @@ const Sidebar = ({className}:SidebarProps) => {
           </h1>
         </div>
       </Link>
+      <div className="flex flex-1 flex-col gap-y-2">
+      <SidebarItem label="Learn" href="/learn" iconSrc="/learn.svg" />
+        <SidebarItem
+          label="Leaderboard"
+          href="/leaderboard"
+          iconSrc="/leaderboard.svg"
+        />
+        <SidebarItem label="Quests" href="/quests" iconSrc="/quests.svg" />
+        <SidebarItem label="Shop" href="/shop" iconSrc="/shop.svg" />
+
+      </div>
+      <div className="p-4">
+        <ClerkLoading>
+          <Loader className="h-5 w-5 animate-spin text-muted-foreground" />
+        </ClerkLoading>
+
+        <ClerkLoaded>
+          <UserButton
+            afterSignOutUrl="/"
+            appearance={{
+              elements: { userButtonPopoverCard: { pointerEvents: "initial" } },
+            }}
+          />
+        </ClerkLoaded>
+      </div>
     </div>
   )
 }
