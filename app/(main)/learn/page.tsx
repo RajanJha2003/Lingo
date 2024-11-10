@@ -29,7 +29,7 @@ const page = async() => {
       </StickyWrapper>
 
       <FeedWrapper>
-       <Header title="Spanish" />
+       <Header title={userProgress.activeCourse.title} />
        <div className='space-y-4'>
         
 
