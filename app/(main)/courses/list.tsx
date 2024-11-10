@@ -2,8 +2,9 @@
 "use client";
 
 import { courses, userProgress } from '@/db/schema';
-import React from 'react'
+import React, { startTransition, useTransition } from 'react'
 import Card from './card';
+import { useRouter } from 'next/navigation';
 
 type Props={
     courses:typeof courses.$inferSelect[];
@@ -12,6 +13,21 @@ type Props={
 }
 
 const List = ({courses,activeCourseId}:Props) => {
+
+  const router=useRouter();
+  const [pending,setPending]=useTransition();
+
+  const onClick=(id:number)=>{
+    if(pending) return;
+
+    if(id===activeCourseId){
+      return router.push("/learn");
+    }
+
+    startTransition(()=>{
+
+    })
+  }
   return (
     <div className="grid grid-cols-2 gap-4 pt-6 lg:grid-cols-[repeat(auto-fill,minmax(210px,1fr))]">
     {courses.map((course) => (
@@ -21,8 +37,8 @@ const List = ({courses,activeCourseId}:Props) => {
         title={course.title}
         imageSrc={course.imageSrc}
 
-        onClick={()=>{}}
-        disabled={false}
+        onClick={onClick}
+        disabled={pending}
         
         isActive={course.id === activeCourseId}
       />
