@@ -4,15 +4,17 @@ import { StickyWrapper } from '@/components/sticky-wrapper'
 import React from 'react'
 import Header from './header'
 import UserProgress from '@/components/user-progress'
-import { getUserProgress } from '@/db/queries'
+import { getUnits, getUserProgress } from '@/db/queries'
 import { redirect } from 'next/navigation'
 
 const page = async() => {
   const userProgressData=getUserProgress();
+  const unitsData=getUnits();
 
 
-  const [userProgress]=await Promise.all([
-    userProgressData
+  const [userProgress,units]=await Promise.all([
+    userProgressData,
+    unitsData
   ])
 
   if(!userProgress || !userProgress.activeCourse){
@@ -30,11 +32,16 @@ const page = async() => {
 
       <FeedWrapper>
        <Header title={userProgress.activeCourse.title} />
-       <div className='space-y-4'>
-        
+       {
+        units.map((unit)=>(
+          <div key={unit.id} className='mb-10'>
+            {
+              JSON.stringify(unit)
+            }
 
-       </div>
-
+          </div>
+        ))
+       }
       </FeedWrapper>
 
     </div>
