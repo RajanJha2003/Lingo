@@ -1,8 +1,12 @@
+
+
 import { cache } from "react";
 import db from "./drizzle";
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 import { courses, userProgress } from "./schema";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 
 
@@ -38,7 +42,12 @@ export const getCourseById=cache(async(courseId:number)=>{
         where:eq(courses.id,courseId)
     })
 
+    return data;
+
 })
+
+
+
 
 
 
